@@ -29,19 +29,19 @@
                 <div>
                     <a href="#">
                         <strong>Post</strong>
-                        <div> 130</div>
+                        <div> {{ count(Auth::user()->posts) }}</div>
                     </a>
                 </div>
                 <div>
                     <a href="#">
                         <strong>Following</strong>
-                        <div> 1,230</div>
+                        <div> {{ count(Auth::user()->following) }}</div>
                     </a>
                 </div>
                 <div>
                     <a href="#">
                         <strong>Followers</strong>
-                        <div> 2,430</div>
+                        <div>{{ count(Auth::user()->followers) }}</div>
                     </a>
                 </div>
             </div>

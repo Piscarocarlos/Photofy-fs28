@@ -32,7 +32,20 @@
 
 
                 <div class="capitalize flex font-semibold space-x-3 text-center text-sm my-2">
-                    <a href="#" class="bg-gray-300 shadow-sm p-2 px-6 rounded-md dark:bg-gray-700"> Add friend</a>
+                    {{-- @if (!checkIfUserFollow($user->id))
+                        @if(!checkIfUserFollowMe($user->id))
+                        <form action="{{ route('follow.request', encrypt($user->id))}}" method="POST">
+                            @csrf
+                            <button type="submit" class="bg-gray-300 shadow-sm p-2 px-6 rounded-md dark:bg-gray-700"> Add Friend </button>
+                        </form>
+                        @endif
+                    @else
+                    <form action="{{ route('followed.request', encrypt($user->id)) }}" method="POST">
+                        @csrf
+                        <button type="submit" class="border border-gray-200 font-semibold px-4 py-1 rounded-full hover:bg-pink-600 hover:text-white hover:border-pink-600 dark:border-gray-800"> Followed </button>
+                    </form>
+                    @endif --}}
+
                     <a href="#" class="bg-pink-500 shadow-sm p-2 pink-500 px-6 rounded-md text-white hover:text-white hover:bg-pink-600"> Send message</a>
                     <div>
 
@@ -75,9 +88,9 @@
                 </div>
 
                 <div class="divide-gray-300 divide-transparent divide-x grid grid-cols-3 lg:text-left lg:text-lg mt-3 text-center w-full dark:text-gray-100">
-                    <div class="flex lg:flex-row flex-col"> 120k <strong class="lg:pl-2">Posts</strong></div>
-                    <div class="lg:pl-4 flex lg:flex-row flex-col"> 420k <strong class="lg:pl-2">Followers</strong></div>
-                    <div class="lg:pl-4 flex lg:flex-row flex-col"> 530k <strong class="lg:pl-2">Following</strong></div>
+                    <div class="flex lg:flex-row flex-col"> {{ count(Auth::user()->posts) }} <strong class="lg:pl-2">Posts</strong></div>
+                    <div class="lg:pl-4 flex lg:flex-row flex-col"> {{ count(Auth::user()->followers) }} <strong class="lg:pl-2">Followers</strong></div>
+                    <div class="lg:pl-4 flex lg:flex-row flex-col"> {{ count(Auth::user()->following) }}<strong class="lg:pl-2">Following</strong></div>
                 </div>
 
         </div>
@@ -86,24 +99,6 @@
 
     </div>
 
-    <h1 class="lg:text-2xl text-lg font-extrabold leading-none text-gray-900 tracking-tight mt-8"> Highths </h1>
-
-    <div class="my-6 grid lg:grid-cols-5 grid-cols-3 gap-2 hover:text-yellow-700 uk-link-reset">
-        <a href="#">
-            <div class="bg-gray-100 border-4 border-dashed flex flex-col h-full items-center justify-center relative rounded-2xl w-full">
-                <i class="text-4xl uil-plus-circle"></i> <span> Add new </span>
-            </div>
-        </a>
-        <a href="#story-modal" uk-toggle>
-            <img src="assets/images/avatars/avatar-lg-1.jpg" alt="" class="w-full lg:h-60 h-40 rounded-md object-cover">
-        </a>
-        <a href="#story-modal" uk-toggle>
-            <img src="assets/images/post/img2.jpg" alt="" class="w-full lg:h-60 h-40 rounded-md object-cover">
-        </a>
-        <a href="#story-modal" uk-toggle>
-            <img src="assets/images/post/img7.jpg" alt="" class="w-full lg:h-60 h-40 rounded-md object-cover uk-visible@s">
-        </a>
-    </div>
 
     <div class="flex items-center justify-between mt-8 space-x-3">
         <h1 class="flex-1 font-extrabold leading-none lg:text-2xl text-lg text-gray-900 tracking-tight uk-heading-line"><span>Explore</span></h1>
@@ -115,107 +110,26 @@
 
     <div class="my-6 grid lg:grid-cols-4 grid-cols-2 gap-1.5 hover:text-yellow-700 uk-link-reset">
     <div>
-        <div class="bg-red-500 max-w-full lg:h-64 h-40 rounded-md relative overflow-hidden uk-transition-toggle" tabindex="0">
-                <img src="assets/images/avatars/avatar-lg-1.jpg" class="w-full h-full absolute object-cover inset-0">
-
-                <div class="absolute bg-black bg-opacity-40 bottom-0 flex h-full items-center justify-center space-x-5 text-lg text-white uk-transition-scale-up w-full">
-                    <a href="#story-modal" uk-toggle class="flex items-center"> <ion-icon name="heart" class="mr-1"></ion-icon> 150 </a>
-                    <a href="#story-modal" uk-toggle class="flex items-center"> <ion-icon name="chatbubble-ellipses" class="mr-1"></ion-icon> 30 </a>
-                    <a href="#story-modal" uk-toggle class="flex items-center"> <ion-icon name="pricetags" class="mr-1"></ion-icon> 12  </a>
-                </div>
-
-            </div>
-        </div>
-        <div>
+        @foreach (Auth::user()->posts as $post)
             <div class="bg-red-500 max-w-full lg:h-64 h-40 rounded-md relative overflow-hidden uk-transition-toggle" tabindex="0">
-                <img src="assets/images/post/img1.jpg" class="w-full h-full absolute object-cover inset-0">
+                    <img src="{{ $post->image }}" class="w-full h-full absolute object-cover inset-0">
 
-                <div class="absolute bg-black bg-opacity-40 bottom-0 flex h-full items-center justify-center space-x-5 text-lg text-white uk-transition-scale-up w-full">
-                    <a href="#story-modal" uk-toggle class="flex items-center"> <ion-icon name="heart" class="mr-1"></ion-icon> 150 </a>
-                    <a href="#story-modal" uk-toggle class="flex items-center"> <ion-icon name="chatbubble-ellipses" class="mr-1"></ion-icon> 30 </a>
-                    <a href="#story-modal" uk-toggle class="flex items-center"> <ion-icon name="pricetags" class="mr-1"></ion-icon> 12  </a>
+                    <div class="absolute bg-black bg-opacity-40 bottom-0 flex h-full items-center justify-center space-x-5 text-lg text-white uk-transition-scale-up w-full">
+                        <a href="#story-modal" uk-toggle class="flex items-center"> <ion-icon name="heart" class="mr-1"></ion-icon> 150 </a>
+                        <a href="#story-modal" uk-toggle class="flex items-center"> <ion-icon name="chatbubble-ellipses" class="mr-1"></ion-icon> 30 </a>
+                        <a href="#story-modal" uk-toggle class="flex items-center"> <ion-icon name="pricetags" class="mr-1"></ion-icon> 12  </a>
+                    </div>
+
                 </div>
-
             </div>
-        </div>
-        <div>
-            <div class="bg-red-500 max-w-full lg:h-64 h-40 rounded-md relative overflow-hidden uk-transition-toggle" tabindex="0">
-                <img src="assets/images/post/img2.jpg" class="w-full h-full absolute object-cover inset-0">
-
-                <div class="absolute bg-black bg-opacity-40 bottom-0 flex h-full items-center justify-center space-x-5 text-lg text-white uk-transition-scale-up w-full">
-                    <a href="#story-modal" uk-toggle class="flex items-center"> <ion-icon name="heart" class="mr-1"></ion-icon> 150 </a>
-                    <a href="#story-modal" uk-toggle class="flex items-center"> <ion-icon name="chatbubble-ellipses" class="mr-1"></ion-icon> 30 </a>
-                    <a href="#story-modal" uk-toggle class="flex items-center"> <ion-icon name="pricetags" class="mr-1"></ion-icon> 12  </a>
-                </div>
-
-            </div>
-        </div>
-        <div>
-            <div class="bg-red-500 max-w-full lg:h-64 h-40 rounded-md relative overflow-hidden uk-transition-toggle" tabindex="0">
-                <img src="assets/images/post/img3.jpg" class="w-full h-full absolute object-cover inset-0">
-
-                <div class="absolute bg-black bg-opacity-40 bottom-0 flex h-full items-center justify-center space-x-5 text-lg text-white uk-transition-scale-up w-full">
-                    <a href="#story-modal" uk-toggle class="flex items-center"> <ion-icon name="heart" class="mr-1"></ion-icon> 150 </a>
-                    <a href="#story-modal" uk-toggle class="flex items-center"> <ion-icon name="chatbubble-ellipses" class="mr-1"></ion-icon> 30 </a>
-                    <a href="#story-modal" uk-toggle class="flex items-center"> <ion-icon name="pricetags" class="mr-1"></ion-icon> 12  </a>
-                </div>
-
-            </div>
-        </div>
-        <div>
-            <div class="bg-red-500 max-w-full lg:h-64 h-40 rounded-md relative overflow-hidden uk-transition-toggle" tabindex="0">
-                <img src="assets/images/post/img4.jpg" class="w-full h-full absolute object-cover inset-0">
-
-                <div class="absolute bg-black bg-opacity-40 bottom-0 flex h-full items-center justify-center space-x-5 text-lg text-white uk-transition-scale-up w-full">
-                    <a href="#story-modal" uk-toggle class="flex items-center"> <ion-icon name="heart" class="mr-1"></ion-icon> 150 </a>
-                    <a href="#story-modal" uk-toggle class="flex items-center"> <ion-icon name="chatbubble-ellipses" class="mr-1"></ion-icon> 30 </a>
-                    <a href="#story-modal" uk-toggle class="flex items-center"> <ion-icon name="pricetags" class="mr-1"></ion-icon> 12  </a>
-                </div>
-
-            </div>
-        </div>
-        <div>
-            <div class="bg-red-500 max-w-full lg:h-64 h-40 rounded-md relative overflow-hidden uk-transition-toggle" tabindex="0">
-                <img src="assets/images/post/img5.jpg" class="w-full h-full absolute object-cover inset-0">
-
-                <div class="absolute bg-black bg-opacity-40 bottom-0 flex h-full items-center justify-center space-x-5 text-lg text-white uk-transition-scale-up w-full">
-                    <a href="#story-modal" uk-toggle class="flex items-center"> <ion-icon name="heart" class="mr-1"></ion-icon> 150 </a>
-                    <a href="#story-modal" uk-toggle class="flex items-center"> <ion-icon name="chatbubble-ellipses" class="mr-1"></ion-icon> 30 </a>
-                    <a href="#story-modal" uk-toggle class="flex items-center"> <ion-icon name="pricetags" class="mr-1"></ion-icon> 12  </a>
-                </div>
-
-            </div>
-        </div>
-        <div>
-            <div class="bg-red-500 max-w-full lg:h-64 h-40 rounded-md relative overflow-hidden uk-transition-toggle" tabindex="0">
-                <img src="assets/images/avatars/avatar-1.jpg" class="w-full h-full absolute object-cover inset-0">
-
-                <div class="absolute bg-black bg-opacity-40 bottom-0 flex h-full items-center justify-center space-x-5 text-lg text-white uk-transition-scale-up w-full">
-                    <a href="#story-modal" uk-toggle class="flex items-center"> <ion-icon name="heart" class="mr-1"></ion-icon> 150 </a>
-                    <a href="#story-modal" uk-toggle class="flex items-center"> <ion-icon name="chatbubble-ellipses" class="mr-1"></ion-icon> 30 </a>
-                    <a href="#story-modal" uk-toggle class="flex items-center"> <ion-icon name="pricetags" class="mr-1"></ion-icon> 12  </a>
-                </div>
-
-            </div>
-        </div>
-        <div>
-            <div class="bg-red-500 max-w-full lg:h-64 h-40 rounded-md relative overflow-hidden uk-transition-toggle" tabindex="0">
-                <img src="assets/images/avatars/avatar-6.jpg" class="w-full h-full absolute object-cover inset-0">
-
-                <div class="absolute bg-black bg-opacity-40 bottom-0 flex h-full items-center justify-center space-x-5 text-lg text-white uk-transition-scale-up w-full">
-                    <a href="#story-modal" uk-toggle class="flex items-center"> <ion-icon name="heart" class="mr-1"></ion-icon> 150 </a>
-                    <a href="#story-modal" uk-toggle class="flex items-center"> <ion-icon name="chatbubble-ellipses" class="mr-1"></ion-icon> 30 </a>
-                    <a href="#story-modal" uk-toggle class="flex items-center"> <ion-icon name="pricetags" class="mr-1"></ion-icon> 12  </a>
-                </div>
-
-            </div>
-        </div>
-
+        @endforeach
     </div>
 
-    <div class="flex justify-center mt-6">
-        <a href="#" class="bg-white dark:bg-gray-900 font-semibold my-3 px-6 py-2 rounded-full shadow-md dark:bg-gray-800 dark:text-white"> Load more ..</a>
-    </div>
+    @if (count(Auth::user()->posts) === 0)
+        <p class="text-center">Il n'y a pas encore de publications !</p>
+    @endif
+
+
 
 
 </div>

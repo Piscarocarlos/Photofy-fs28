@@ -9,7 +9,7 @@
 /* -------------------------------------------------------------- */
 /* Table of Contents
  -----------------------------------------------------------------
- 
+
    #Dark
    #button
    #input
@@ -25,16 +25,36 @@
    #main_content
    #market
    #group-catagroy-card
-   #story-moda    
+   #story-moda
 
    *************/
- 
+
 
 /* -------------------------------------------------------------- */
 /* Import font
 ----------------------------------------------------------------- */
 @import url("https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&amp;display=swap");
- 
+
+
+.img-box{
+    width: 100%;
+    height: 400px;
+    object-fit: cover;
+}
+
+.notify-link{
+    position: relative;
+}
+
+.notify-link span{
+    position: absolute;
+    right: -10px;
+    top: 0;
+    background-color: #d31a67;
+    color:white;
+    padding: 0 5px;
+    border-radius: 3px;
+}
 
 /* -------------------------------------------------------------- */
 /* 04. Dark mode
@@ -1620,7 +1640,7 @@ strong {
 }
 
 /* ---------------------------------- */
-/*  Simplebar  
+/*  Simplebar
 /* ---------------------------------- */
 [data-simplebar] {
   position: relative;
@@ -2764,7 +2784,7 @@ header .uk-dropdown {
 }
 
 /* ---------------------------------- */
-/* catagroy  card   
+/* catagroy  card
 ------------------------------------- */
 .group-catagroy-card {
   /* background-color: #ffffff; */
@@ -2848,4 +2868,3 @@ header .uk-dropdown {
     position: absolute;
   }
 }
- 

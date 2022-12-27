@@ -3,83 +3,39 @@
 namespace App\Http\Controllers;
 
 use App\Models\Follower;
+use App\Models\User;
+use App\Notifications\SendFollowRequestNotification;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class FollowerController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function index()
-    {
-        //
-    }
+   public function sendFollowRequest(Request $request, $id){
 
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
-    {
-        //
+    $followed_user = User::find(decrypt($id));
+    $follow = new Follower();
+    if(!isUserHasFollow(decrypt($id))) {
+        if($followed_user){
+            $follow->follower_id = Auth::id();
+            $follow->followed_id = $followed_user->id;
+            $follow->save();
+            $followed_user->notify(new SendFollowRequestNotification(Auth::user()));
+            return back();
+        }
+    } else {
+        // request is already send
     }
+   }
 
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
-    public function store(Request $request)
-    {
-        //
-    }
+   public function deleteFollowRequest(Request $request, $id){
+        $followed_user = User::find(decrypt($id));
+        if(checkIfUserFollow(decrypt($id)))
+        {
+            $follow = Follower::where('follower_id', Auth::id())
+            ->where('followed_id', decrypt($id))->first();
 
-    /**
-     * Display the specified resource.
-     *
-     * @param  \App\Models\Follower  $follower
-     * @return \Illuminate\Http\Response
-     */
-    public function show(Follower $follower)
-    {
-        //
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  \App\Models\Follower  $follower
-     * @return \Illuminate\Http\Response
-     */
-    public function edit(Follower $follower)
-    {
-        //
-    }
-
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Models\Follower  $follower
-     * @return \Illuminate\Http\Response
-     */
-    public function update(Request $request, Follower $follower)
-    {
-        //
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  \App\Models\Follower  $follower
-     * @return \Illuminate\Http\Response
-     */
-    public function destroy(Follower $follower)
-    {
-        //
-    }
+            $follow->delete();
+            return back();
+        }
+   }
 }

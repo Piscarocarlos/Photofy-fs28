@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Post;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class PostController extends Controller
 {
@@ -35,7 +36,16 @@ class PostController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $request->validate(['image' => 'required']);
+
+        $post = new Post();
+        if($request->hasFile('image')) {
+            $post->image = $request->file('image')->store('images/posts');
+        }
+        $post->user_id = Auth::id();
+        $post->save();
+
+        return back();
     }
 
     /**

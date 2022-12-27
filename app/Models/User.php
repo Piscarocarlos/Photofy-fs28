@@ -61,4 +61,20 @@ class User extends Authenticatable
             return asset($value);
         }
     }
+
+    public function posts(){
+        return $this->hasMany(Post::class);
+    }
+
+    public function followers(){
+        return $this->hasMany(Follower::class, 'followed_id');
+    }
+
+    public function following(){
+        return $this->hasMany(Follower::class, 'follower_id');
+    }
+
+    public function followers_posts(){
+        return $this->hasManyThrough(Post::class, Follower::class, 'posts.user_id', 'followers.follower_id');
+    }
 }

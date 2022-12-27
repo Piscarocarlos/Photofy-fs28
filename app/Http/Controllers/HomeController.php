@@ -3,6 +3,8 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\VerifyCodeRequest;
+use App\Models\Follower;
+use App\Models\Post;
 use App\Models\User;
 use Exception;
 use Illuminate\Contracts\Encryption\DecryptException;
@@ -38,7 +40,11 @@ class HomeController extends Controller
      */
     public function welcome()
     {
-        return view('welcome');
+        $posts = Post::whereIn('user_id', User::find(Auth::id())->followers->pluck('id'))
+                    ->orWhereIn('user_id', User::find(Auth::id())->following->pluck('id'))
+                    ->get();
+        $following_users = User::where('id', '!=', Auth::id())->get();
+        return view('welcome', compact('posts', 'following_users'));
     }
 
     public function logout(){

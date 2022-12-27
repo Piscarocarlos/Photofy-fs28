@@ -1,6 +1,8 @@
 <?php
 
+use App\Http\Controllers\FollowerController;
 use App\Http\Controllers\HomeController;
+use App\Http\Controllers\PostController;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 
@@ -14,6 +16,11 @@ Route::middleware(['auth', 'verify'])->group(function() {
         Route::get('setting', [HomeController::class, 'showSetting'])->name('setting');
         Route::post('setting', [HomeController::class, 'updateSetting'])->name('setting');
     });
+
+    // posts routes
+    Route::resource('posts', PostController::class);
+    Route::post('follow/{id}', [FollowerController::class, 'sendFollowRequest'])->name('follow.request');
+    Route::post('followed/{id}', [FollowerController::class, 'deleteFollowRequest'])->name('followed.request');
 
 });
 
