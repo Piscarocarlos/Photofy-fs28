@@ -1,8 +1,8 @@
 <div class="sidebar">
     <div class="sidebar_header border-b border-gray-200 from-gray-100 to-gray-50 bg-gradient-to-t  uk-visible@s">
         <a href="#">
-            <img src="assets/images/logo.png">
-            <img src="assets/images/logo-light.png" class="logo_inverse">
+            <img src="{{ asset('assets/images/logo.png') }}">
+            <img src="{{ asset('assets/images/logo-light.png') }}" class="logo_inverse">
         </a>
         <!-- btn night mode -->
         <a href="#" id="night-mode" class="btn-night-mode" data-tippy-placement="left" title="Switch to dark mode"></a>
@@ -22,7 +22,7 @@
                 <img src="{{ Auth::user()->avatar }}"
                     class="bg-gray-200 border-4 border-white rounded-full w-full h-full">
             </div>
-            <a href="profile.html" class="text-xl font-medium capitalize mt-4 uk-link-reset"> {{ Auth::user()->getFullName() }}
+            <a href="{{ route('user.profile') }}" class="text-xl font-medium capitalize mt-4 uk-link-reset"> {{ Auth::user()->getFullName() }}
             </a>
             <small>{{ Auth::user()->pseudo }}</small>
             <div class="flex justify-around w-full items-center text-center uk-link-reset text-gray-800 mt-6">
@@ -49,7 +49,7 @@
         <hr class="-mx-4 -mt-1 uk-visible@s">
         <ul>
             <li class="active">
-                <a href="feed.html">
+                <a href="{{ route('index') }}">
                     <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
                         stroke="currentColor">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
@@ -100,12 +100,12 @@
                 </a>
                 <ul>
                     <li><a href="setting.html">General </a></li>
-                    <li><a href="setting.html"> Account setting </a></li>
+                    <li><a href="{{ route('user.setting') }}"> Account setting </a></li>
                     <li><a href="setting.html">Billing <span class="nav-tag">3</span> </a></li>
                 </ul>
             </li>
             <li>
-                <a href="profile.html">
+                <a href="{{ route('user.profile') }}">
                     <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
                         stroke="currentColor">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
@@ -117,7 +117,7 @@
                 <hr class="my-2">
             </li>
             <li>
-                <a href="form-login.html">
+                <a href="{{ route('logout') }}">
                     <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
                         stroke="currentColor">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"

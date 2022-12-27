@@ -53,12 +53,12 @@
                     <a href="#">
                         <img src="{{ asset('assets/images/logo.png') }}" alt="" class="w-32">
                     </a>
-
+                    @guest
                     <div class="capitalize flex font-semibold hidden lg:block my-2 space-x-3 text-center text-sm">
                         <a href="{{ route('login') }}" class="py-3 px-4">Login</a>
                         <a href="{{ route('register') }}" class="bg-pink-500 pink-500 px-6 py-3 rounded-md shadow text-white">Register</a>
                     </div>
-
+                    @endguest
                 </div>
             </div>
         </div>

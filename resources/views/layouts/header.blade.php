@@ -4,8 +4,8 @@
             <!-- Logo -->
             <div id="logo" class=" uk-hidden@s">
                 <a href="home.html">
-                    <img src="assets/images/logo-mobile.png" alt="">
-                    <img src="assets/images/logo-mobile-light.png" class="logo_inverse">
+                    <img src="{{ asset('assets/images/logo-mobile.png') }}" alt="">
+                    <img src="{{ asset('assets/images/logo-mobile-light.png') }}" class="logo_inverse">
                 </a>
             </div>
 
@@ -43,26 +43,26 @@
                 <!-- notification contents -->
                 <div class="flex justify-center flex-center text-center dark:text-gray-300">
 
-                    <div class="flex flex-col choose-upload text-center">
+                    <form action="" method="POST" enctype="multipart/form-data">
+                        @csrf
+                        <div class="flex flex-col choose-upload text-center">
 
-                        <div class="bg-gray-100 border-2 border-dashed flex flex-col h-24 items-center justify-center relative w-full rounded-lg dark:bg-gray-800 dark:border-gray-600">
-                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" class="w-12">
-                                <path d="M5.5 13a3.5 3.5 0 01-.369-6.98 4 4 0 117.753-1.977A4.5 4.5 0 1113.5 13H11V9.413l1.293 1.293a1 1 0 001.414-1.414l-3-3a1 1 0 00-1.414 0l-3 3a1 1 0 001.414 1.414L9 9.414V13H5.5z" />
-                                <path d="M9 13h2v5a1 1 0 11-2 0v-5z" />
-                            </svg>
+                            <div class="bg-gray-100 border-2 border-dashed flex flex-col h-24 items-center justify-center relative w-full rounded-lg dark:bg-gray-800 dark:border-gray-600">
+                                <img id="blah" src="https://via.placeholder.com/40" alt="" width="80">
+                            </div>
+
+                            <p class="my-3 leading-6"> </p>
+                            <div uk-form-custom>
+                                <input type="file" id="imgInp">
+                                <a href="#" class="button soft-warning small"> Choose file</a>
+                            </div>
+
+                            <a href="#" class="uk-text-muted mt-3 uk-link"
+                                uk-toggle="target: .choose-upload ;  animation: uk-animation-slide-right-small, uk-animation-slide-left-medium; queued: true">
+                                Or Import Video </a>
+                                <button href="#" class="button soft-warning small mt-3"> Pusblish</button>
                         </div>
-
-                        <p class="my-3 leading-6"> Do you have a video wants to share us <br> please upload her ..
-                        </p>
-                        <div uk-form-custom>
-                            <input type="file">
-                            <a href="#" class="button soft-warning small"> Choose file</a>
-                        </div>
-
-                        <a href="#" class="uk-text-muted mt-3 uk-link"
-                            uk-toggle="target: .choose-upload ;  animation: uk-animation-slide-right-small, uk-animation-slide-left-medium; queued: true">
-                            Or Import Video </a>
-                    </div>
+                    </form>
 
                     <div class="uk-flex uk-flex-column choose-upload" hidden>
                         <div class="mx-auto flex flex-col h-24 items-center justify-center relative w-full rounded-lg">
